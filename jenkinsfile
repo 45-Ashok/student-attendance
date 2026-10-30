@@ -1,27 +1,23 @@
-```groovy
 pipeline {
     agent any
 
     stages {
-        stage('Download Code') {
+        stage('Checkout') {
             steps {
-                checkout scm
-                echo 'Code downloaded successfully'
+                git branch: 'main', url: 'https://github.com/45-Ashok/student-attendance.git'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                bat 'python --version'
                 bat 'python -m pip install -r requirements.txt'
             }
         }
 
         stage('Run Tests') {
             steps {
-                bat 'python -m unittest discover -s . -p "test_*.py"'
+                bat 'python -m pytest'
             }
         }
     }
 }
-```
