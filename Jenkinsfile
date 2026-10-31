@@ -1,1 +1,25 @@
-C:\Users\Ashok\student-attendance\Jenkinsfile
+pipeline {
+    agent any
+
+    stages {
+        stage('Download Code') {
+            steps {
+                checkout scm
+                echo 'Code downloaded successfully'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                bat 'python --version'
+                bat 'python -m pip install -r requirements.txt'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                bat 'python -m unittest discover -s . -p "test_*.py"'
+            }
+        }
+    }
+}
